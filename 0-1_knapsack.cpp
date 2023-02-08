@@ -39,9 +39,6 @@ int main() {
     row--, col--;
     while(sz>0 && row>0 && col>0) {
         if(ans[row][col]==ans[row-1][col]) {
-            v.push_back(arr[row-1].name);
-            sz -= arr[row-1].weight;
-            col -= arr[row-1].weight;
             row--;
         }
         else {
