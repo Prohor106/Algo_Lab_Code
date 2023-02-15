@@ -62,7 +62,7 @@ int main() {
      }*/
     cout << endl;
 
-
+    //coin piciking
     vector<int> ans;
     int row = n, col = amount;
     while(row>0 && col>0) {
