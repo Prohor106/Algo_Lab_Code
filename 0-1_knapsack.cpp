@@ -1,60 +1,53 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct item {
+#define ll long long
+#define all(v) (v).begin(),(v).end()
+
+struct item{
     int name, price, weight;
-    void input() {
+    void input(){
         cin >> name >> price >> weight;
     }
 };
 
 int main() {
-    int n, sz;
-    cin >> n >> sz;
 
-    item arr[n];
+   int n, sz;
+    cin >> n >> sz;
+    item arr[n+1];
     for(int i=1; i<=n; i++) arr[i].input();
 
     int row = n+1;
     int col = sz+1;
-    int ans[row][col];
-    memset(ans, 0, sizeof(ans));
+    int mat[row][col];
+    memset(mat, 0, sizeof(mat));
 
-    for(int i=1; i<row; i++) {
-        for(int j=1; j<col; j++) {
-            if(j-arr[i].weight < 0) ans[i][j] = max(ans[i][j-1], ans[i-1][j]);
-            else ans[i][j] = max(ans[i-1][j], ans[i-1][j-arr[i].weight]+arr[i].price);
+    for(int i=1; i<row; i++){
+        for(int j=1; j<col; j++){
+            if(j-arr[i].weight < 0) mat[i][j] = mat[i-1][j];
+            else mat[i][j] = max(mat[i-1][j], mat[i-1][j-arr[i].weight]+arr[i].price);
         }
     }
 
-    for(int i=0; i<row; i++) {
-        for(int j=0; j<col; j++)
-            cout <<ans[i][j] <<" ";
-        cout << endl;
-    }
-
-    cout << "Max Profit : " << ans[row-1][col-1] << endl;
-
-    vector<int> v;
+    cout << "Max Profit : " << mat[row-1][col-1] << endl;
     row--, col--;
-    while(sz>0 && row>0 && col>0) {
-        if(ans[row][col]==ans[row-1][col]) {
-            row--;
-        }
-        else {
-            v.push_back(arr[row].name);
-            sz -= arr[row].weight;
+    vector<int> ans;
+    while(row>0 && col>0){
+        if(mat[row][col]==mat[row-1][col]) row--;
+        else{
+            ans.push_back(arr[row].name);
             col -= arr[row].weight;
-            row--;
         }
     }
+    reverse(all(ans));
+    
+    cout << "Selected Items : " << endl;
+    for(auto u:ans) cout << u << " ";
+        cout << endl;
 
-    reverse(v.begin(), v.end());
-
-    for(auto u:v) cout << u << " ";
-    cout << endl;
+   return 0;
 }
-
 
 /*
 5 6
