@@ -38,6 +38,7 @@ int main() {
         else{
             ans.push_back(arr[row].name);
             col -= arr[row].weight;
+            row--;
         }
     }
     reverse(all(ans));
